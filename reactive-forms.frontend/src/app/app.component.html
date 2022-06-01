@@ -13,8 +13,11 @@
       >Email
       <input type="text" placeholder="Type your email" formControlName="email" />
     </label>
-    <div *ngIf="myForm.get('email').invalid && (myForm.get('email').dirty || myForm.get('email').touched)">
+    <div *ngIf="myForm.get('email').invalid && (myForm.get('email').dirty || myForm.get('email').touched) && !myForm.get('email').errors?.['domainName']">
       Please provide email.
+    </div>
+    <div *ngIf="myForm.get('email').invalid && (myForm.get('email').dirty || myForm.get('email').touched) && myForm.get('email').errors?.['domainName']">
+      Domain should be 'avl.com'.
     </div>
   </div>
   <div>

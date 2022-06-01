@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs'
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,17 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.myForm = this.fb.group({
       name: ['demo', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, this.emailDomainValidator]],
       message: ['', [Validators.required, Validators.minLength(15)]]
+    });
+
+    this.myForm.get('name').valueChanges
+    .pipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    )
+    .subscribe(value => {
+      console.log('name value changed: ', value);
     });
   }
 
@@ -25,5 +35,20 @@ export class AppComponent implements OnInit {
     console.log('name value: ', myForm.value.name);
     console.log('email value: ', myForm.value.email);
     console.log('message value: ', myForm.value.message);
+  }
+
+  emailDomainValidator(control: FormControl) {
+    const emailValue = control.value;
+    if (emailValue && emailValue.indexOf('@') !== -1) {
+      const domain = emailValue.split('@')[1];
+      if (domain !== 'avl.com') {
+        return {
+          domainName: {
+            value: domain
+          }
+        }
+      }
+    }
+    return null;
   }
 }
