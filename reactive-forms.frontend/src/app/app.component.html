@@ -4,18 +4,27 @@
       >Name
       <input type="text" placeholder="Type your name" formControlName="name" />
     </label>
+    <div *ngIf="myForm.get('name').invalid && (myForm.get('name').dirty || myForm.get('name').touched)">
+      Please provide name.
+    </div>
   </div>
   <div>
     <label
       >Email
       <input type="text" placeholder="Type your email" formControlName="email" />
     </label>
+    <div *ngIf="myForm.get('email').invalid && (myForm.get('email').dirty || myForm.get('email').touched)">
+      Please provide email.
+    </div>
   </div>
   <div>
     <label
       >Message
       <input type="text" placeholder="Type your message" formControlName="message"/>
     </label>
+    <div *ngIf="myForm.get('message').invalid && (myForm.get('message').dirty || myForm.get('message').touched)">
+      Please provide message.
+    </div>
   </div>
   <button type="submit">Send</button>
 </form>
