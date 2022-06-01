@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormControl, FormGroup } from '@angular/forms';
+import { Form, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +10,13 @@ export class AppComponent implements OnInit {
   title = 'reactive-forms.frontend';
   myForm: FormGroup;
 
+  constructor(private fb: FormBuilder) {}
+
   ngOnInit(): void {
-    this.myForm = new FormGroup({
-      name: new FormControl(''),
-      email: new FormControl(''),
-      message: new FormControl('')
+    this.myForm = this.fb.group({
+      name: 'akhil',
+      email: '',
+      message: ''
     });
   }
 
