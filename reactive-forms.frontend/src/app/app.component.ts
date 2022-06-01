@@ -25,6 +25,5 @@ export class AppComponent implements OnInit {
     console.log('name value: ', myForm.value.name);
     console.log('email value: ', myForm.value.email);
     console.log('message value: ', myForm.value.message);
-
   }
 }
